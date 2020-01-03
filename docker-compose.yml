@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  relay-chat-db:
+    image: mysql:5.7.17
+    container_name: relay-chat-db
+    environment:
+      - MYSQL_DATABASE=relay-chat
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3310:3306
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d:cached
