@@ -11,3 +11,14 @@ services:
       - 3310:3306
     volumes:
       - ./mysql:/docker-entrypoint-initdb.d:cached
+  relay-chat-phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: relay-chat-phpmyadmin
+    ports:
+      - 8081:80
+    volumes:
+      - ./phpmyadmin/config.inc.php:/etc/phpmyadmin/config.inc.php
+    environment:
+      - MYSQL_DATABASE=relay-chat
+      - MYSQL_ROOT_PASSWORD=password
+      - PMA_HOST=relay-chat-db
