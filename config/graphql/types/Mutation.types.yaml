@@ -8,25 +8,9 @@ Mutation:
                     inputType: CreateUserInput
                     payloadType: CreateUserPayload
                     mutateAndGetPayload: "@=mutation('create_user', [value['name']])"
-
-#   input CreateUserInput {
-#     clientMutationId: string!
-#     name: string!
-#   }
-CreateUserInput:
-    type: relay-mutation-input
-    config:
-        fields:
-            name:
-                type: "String!"
-
-#   type CreateUserPayload {
-#     clientMutationId: string!
-#     user: User
-#   }
-CreateUserPayload:
-    type: relay-mutation-payload
-    config:
-        fields:
-            user:
-                type: User
+            PostMessage:
+                builder: "Relay::Mutation"
+                builderConfig:
+                    inputType: PostMessageInput
+                    payloadType: PostMessagePayload
+                    mutateAndGetPayload: "@=mutation('post_message', [value['text'], value['userId']])"

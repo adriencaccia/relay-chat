@@ -1,0 +1,24 @@
+#   input PostMessageInput {
+#     clientMutationId: string!
+#     text: string
+#     userId: int
+#   }
+PostMessageInput:
+    type: relay-mutation-input
+    config:
+        fields:
+            text:
+                type: String
+            userId:
+                type: Int
+
+#   type PostMessagePayload {
+#     clientMutationId: string!
+#     message: Message
+#   }
+PostMessagePayload:
+    type: relay-mutation-payload
+    config:
+        fields:
+            message:
+                type: Message
