@@ -8,3 +8,6 @@ Query:
                     id:
                         type: Int
                 resolve: '@=resolver("get_user", [args["id"]])'
+            messages:
+                type: '[Message]'
+                resolve: '@=resolver("get_messages")'

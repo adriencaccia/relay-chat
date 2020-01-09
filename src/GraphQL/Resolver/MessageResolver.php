@@ -4,21 +4,28 @@ namespace App\GraphQL\Resolver;
 
 use App\Entity\Message;
 use App\Entity\User;
+use App\Repository\MessageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 
-class MessageResolver implements ResolverInterface
+class MessageResolver implements ResolverInterface, AliasedInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(EntityManagerInterface $em)
-    {
+    /** @var MessageRepository */
+    private $messageRepository;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        MessageRepository $messageRepository
+    ) {
         $this->em = $em;
+        $this->messageRepository = $messageRepository;
     }
 
     public function __invoke(ResolveInfo $info, $value, Argument $args)
@@ -40,11 +47,29 @@ class MessageResolver implements ResolverInterface
 
     public function createdAt(Message $message): string
     {
-        return $message->getCreatedAt()->format('H:i:s');
+        return $message->getCreatedAt()->format('Y-m-d H:i:s');
     }
 
     public function user(Message $message): User
     {
         return $message->getUser();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAliases(): array
+    {
+        return [
+            'getMessages' => 'get_messages',
+        ];
+    }
+
+    /**
+     * @return ArrayCollection|Message[]
+     */
+    public function getMessages(): ArrayCollection
+    {
+        return $this->messageRepository->findAllAndSort();
     }
 }
