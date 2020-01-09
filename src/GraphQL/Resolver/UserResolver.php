@@ -30,6 +30,11 @@ class UserResolver implements ResolverInterface, AliasedInterface
         return $this->{$method}($value, $args);
     }
 
+    public function id(User $user): int
+    {
+        return $user->getId();
+    }
+
     public function name(User $user): string
     {
         return $user->getName();
