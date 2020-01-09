@@ -1,0 +1,4 @@
+MessageConnection:
+    type: relay-connection
+    config:
+        nodeType: Message!

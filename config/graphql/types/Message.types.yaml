@@ -1,0 +1,11 @@
+Message:
+    type: object
+    config:
+        resolveField: '@=resolver("App\\GraphQL\\Resolver\\MessageResolver", [info, value, args])'
+        fields:
+            text:
+                type: String
+            createdAt:
+                type: String
+            user:
+                type: User

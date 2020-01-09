@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,11 +50,11 @@ class User
     }
 
     /**
-     * @return Collection|Message[]
+     * @return ArrayCollection|Message[]
      */
-    public function getMessages(): Collection
+    public function getMessages(): ArrayCollection
     {
-        return $this->messages;
+        return new ArrayCollection($this->messages->toArray());
     }
 
     public function addMessage(Message $message): self
