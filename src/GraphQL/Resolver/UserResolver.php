@@ -3,6 +3,8 @@
 namespace App\GraphQL\Resolver;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -13,14 +15,18 @@ use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 
 class UserResolver implements ResolverInterface, AliasedInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
+    /** @var EntityManagerInterface */
+    private $em;
 
-    public function __construct(EntityManagerInterface $em)
-    {
+    /** @var UserRepository */
+    private $userRepository;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        UserRepository $userRepository
+    ) {
         $this->em = $em;
+        $this->userRepository = $userRepository;
     }
 
     public function __invoke(ResolveInfo $info, $value, Argument $args)
@@ -57,11 +63,20 @@ class UserResolver implements ResolverInterface, AliasedInterface
     {
         return [
             'getUser' => 'get_user',
+            'getUsers' => 'get_users',
         ];
     }
 
     public function getUser(int $id): User
     {
         return $this->em->find(User::class, $id);
+    }
+
+    /**
+     * @return ArrayCollection|User[]
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return new ArrayCollection($this->userRepository->findAll());
     }
 }
