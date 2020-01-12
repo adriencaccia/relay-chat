@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/client"
+        },
+        {
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",

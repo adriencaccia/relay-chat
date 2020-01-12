@@ -1,0 +1,15 @@
+{
+  schema: {
+    files: 'data/*.graphql',
+  },
+  query: {
+    files: [
+      // [Embedded queries] graphql tag files
+      {
+        match: { include: 'client/src/**/*.js', ignore: '**/tests/**/*.js' },
+        parser: [ 'EmbeddedQueryParser', { startTag: 'graphql`', endTag: '`' } ],
+        isRelay: true
+      },
+    ]
+  }
+}
