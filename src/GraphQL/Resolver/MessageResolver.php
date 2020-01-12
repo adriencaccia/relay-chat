@@ -11,6 +11,8 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
+use Overblog\GraphQLBundle\Relay\Connection\Output\Connection;
+use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 
 class MessageResolver implements ResolverInterface, AliasedInterface
 {
@@ -65,11 +67,14 @@ class MessageResolver implements ResolverInterface, AliasedInterface
         ];
     }
 
-    /**
-     * @return ArrayCollection|Message[]
-     */
-    public function getMessages(): ArrayCollection
+    public function getMessages(Argument $args): Connection
     {
-        return $this->messageRepository->findAllAndSort();
+        $messages = new ArrayCollection($this->messageRepository->findAll());
+
+        $paginator = new Paginator(function ($offset, $limit) use ($messages) {
+            return $messages->slice($offset, $limit ?? 10);
+        });
+
+        return $paginator->auto($args, count($messages));
     }
 }

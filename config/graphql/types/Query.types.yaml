@@ -9,8 +9,10 @@ Query:
                         type: Int
                 resolve: '@=resolver("get_user", [args["id"]])'
             users:
-                type: '[User]'
-                resolve: '@=resolver("get_users")'
+                type: UserConnection
+                argsBuilder: Relay::Connection
+                resolve: '@=resolver("get_users", [args])'
             messages:
-                type: '[Message]'
-                resolve: '@=resolver("get_messages")'
+                type: MessageConnection
+                argsBuilder: Relay::Connection
+                resolve: '@=resolver("get_messages", [args])'

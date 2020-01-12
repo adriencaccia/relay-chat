@@ -9,3 +9,8 @@ Message:
                 type: String
             user:
                 type: User
+
+MessageConnection:
+    type: relay-connection
+    config:
+        nodeType: Message!

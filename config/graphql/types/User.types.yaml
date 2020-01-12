@@ -10,3 +10,8 @@ User:
             messages:
                 type: MessageConnection
                 argsBuilder: Relay::ForwardConnection
+
+UserConnection:
+    type: relay-connection
+    config:
+        nodeType: User!

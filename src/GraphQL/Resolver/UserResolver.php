@@ -72,11 +72,14 @@ class UserResolver implements ResolverInterface, AliasedInterface
         return $this->em->find(User::class, $id);
     }
 
-    /**
-     * @return ArrayCollection|User[]
-     */
-    public function getUsers(): ArrayCollection
+    public function getUsers(Argument $args): Connection
     {
-        return new ArrayCollection($this->userRepository->findAll());
+        $users = new ArrayCollection($this->userRepository->findAll());
+
+        $paginator = new Paginator(function ($offset, $limit) use ($users) {
+            return $users->slice($offset, $limit ?? 10);
+        });
+
+        return $paginator->auto($args, count($users));
     }
 }
