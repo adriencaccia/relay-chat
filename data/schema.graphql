@@ -1,0 +1,94 @@
+input CreateUserInput {
+  name: String!
+  clientMutationId: String
+}
+
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+type Message {
+  text: String
+  createdAt: String
+  user: User
+}
+
+"""A connection to a list of items."""
+type MessageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """Information to aid in pagination."""
+  edges: [MessageEdge]
+}
+
+"""An edge in a connection."""
+type MessageEdge {
+  """The item at the end of the edge."""
+  node: Message!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+type Mutation {
+  CreateUser(input: CreateUserInput!): CreateUserPayload
+  PostMessage(input: PostMessageInput!): PostMessagePayload
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+input PostMessageInput {
+  text: String
+  userId: Int
+  clientMutationId: String
+}
+
+type PostMessagePayload {
+  message: Message
+  clientMutationId: String
+}
+
+type Query {
+  user(id: Int): User
+  users(after: String, first: Int, before: String, last: Int): UserConnection
+  messages(after: String, first: Int, before: String, last: Int): MessageConnection
+}
+
+type User {
+  id: Int
+  name: String
+  messages(after: String, first: Int): MessageConnection
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """Information to aid in pagination."""
+  edges: [UserEdge]
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
