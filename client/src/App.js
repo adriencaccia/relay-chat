@@ -1,6 +1,7 @@
 import graphql from "babel-plugin-relay/macro";
 import React from "react";
 import { QueryRenderer } from "react-relay";
+import UserList from "./components/UserList";
 import relayEnvironment from "./relayEnvironment";
 
 export default class App extends React.Component {
@@ -10,14 +11,7 @@ export default class App extends React.Component {
         environment={relayEnvironment}
         query={graphql`
           query AppQuery {
-            users {
-              edges {
-                node {
-                  name
-                }
-                cursor
-              }
-            }
+            ...UserList_userData
           }
         `}
         variables={{}}
@@ -30,12 +24,7 @@ export default class App extends React.Component {
           }
           return (
             <div>
-              <div>Number of users: {props.users.edges.length}</div>
-              <ul>
-                {props.users.edges.map(edge => (
-                  <li key={edge.cursor}>{edge.node.name}</li>
-                ))}
-              </ul>
+              <UserList userData={props} />
             </div>
           );
         }}
