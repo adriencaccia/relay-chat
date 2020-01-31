@@ -42,6 +42,11 @@ class MessageResolver implements ResolverInterface, AliasedInterface
         return $this->em->find(Message::class, $id);
     }
 
+    public function id(Message $message): string
+    {
+        return $message->getRelayId();
+    }
+
     public function text(Message $message): string
     {
         return $message->getText();

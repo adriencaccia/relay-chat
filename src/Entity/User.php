@@ -27,6 +27,11 @@ class User
      */
     private $messages;
 
+    /**
+     * @ORM\Column(type="string", length=13)
+     */
+    private $relayId;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -76,6 +81,18 @@ class User
                 $message->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRelayId(): ?string
+    {
+        return $this->relayId;
+    }
+
+    public function setRelayId(string $relayId): self
+    {
+        $this->relayId = $relayId;
 
         return $this;
     }

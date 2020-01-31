@@ -20,7 +20,10 @@ class UserMutation implements MutationInterface, AliasedInterface
     public function createUser(string $name): array
     {
         $user = new User();
-        $user->setName($name);
+        $user
+            ->setName($name)
+            ->setRelayId(uniqid())
+        ;
 
         $this->em->persist($user);
         $this->em->flush();

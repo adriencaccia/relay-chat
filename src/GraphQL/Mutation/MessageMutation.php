@@ -22,15 +22,16 @@ class MessageMutation implements MutationInterface, AliasedInterface
         $this->userRepository = $userRepository;
     }
 
-    public function postMessage(string $text, int $userId): array
+    public function postMessage(string $text, string $userId): array
     {
-        $user = $this->userRepository->find($userId);
+        $user = $this->userRepository->findOneBy(['relayId' => $userId]);
 
         $message = new Message();
         $message
             ->setCreatedAt(new \DateTime())
             ->setText($text)
             ->setUser($user)
+            ->setRelayId(uniqid())
         ;
 
         $this->em->persist($message);

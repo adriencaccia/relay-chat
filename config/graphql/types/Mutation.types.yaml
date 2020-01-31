@@ -1,16 +1,16 @@
 Mutation:
-    type: object
-    config:
-        fields:
-            CreateUser:
-                builder: "Relay::Mutation"
-                builderConfig:
-                    inputType: CreateUserInput
-                    payloadType: CreateUserPayload
-                    mutateAndGetPayload: "@=mutation('create_user', [value['name']])"
-            PostMessage:
-                builder: "Relay::Mutation"
-                builderConfig:
-                    inputType: PostMessageInput
-                    payloadType: PostMessagePayload
-                    mutateAndGetPayload: "@=mutation('post_message', [value['text'], value['userId']])"
+  type: object
+  config:
+    fields:
+      CreateUser:
+        builder: "Relay::Mutation"
+        builderConfig:
+          inputType: CreateUserInput
+          payloadType: CreateUserPayload
+          mutateAndGetPayload: "@=mutation('create_user', [value['name']])"
+      PostMessage:
+        builder: "Relay::Mutation"
+        builderConfig:
+          inputType: PostMessageInput
+          payloadType: PostMessagePayload
+          mutateAndGetPayload: "@=mutation('post_message', [value['text'], value['userId']])"

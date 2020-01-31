@@ -10,7 +10,7 @@ PostMessageInput:
             text:
                 type: String
             userId:
-                type: Int
+                type: ID
 
 #   type PostMessagePayload {
 #     clientMutationId: string!

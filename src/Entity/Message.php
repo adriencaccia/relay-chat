@@ -32,6 +32,11 @@ class Message
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=13)
+     */
+    private $relayId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class Message
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getRelayId(): ?string
+    {
+        return $this->relayId;
+    }
+
+    public function setRelayId(string $relayId): self
+    {
+        $this->relayId = $relayId;
 
         return $this;
     }
