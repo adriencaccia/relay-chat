@@ -1,18 +1,18 @@
 Query:
-    type: object
-    config:
-        fields:
-            user:
-                type: User
-                args:
-                    id:
-                        type: Int
-                resolve: '@=resolver("get_user", [args["id"]])'
-            users:
-                type: UserConnection
-                argsBuilder: Relay::Connection
-                resolve: '@=resolver("get_users", [args])'
-            messages:
-                type: MessageConnection
-                argsBuilder: Relay::Connection
-                resolve: '@=resolver("get_messages", [args])'
+  type: object
+  config:
+    fields:
+      node:
+        type: Node
+        args:
+          id:
+            type: ID
+        resolve: '@=resolver("get_node", [args["id"]])'
+      users:
+        type: UserConnection
+        argsBuilder: Relay::Connection
+        resolve: '@=resolver("get_users", [args])'
+      messages:
+        type: MessageConnection
+        argsBuilder: Relay::Connection
+        resolve: '@=resolver("get_messages", [args])'

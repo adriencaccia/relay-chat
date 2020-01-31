@@ -1,16 +1,19 @@
 Message:
-    type: object
-    config:
-        resolveField: '@=resolver("App\\GraphQL\\Resolver\\MessageResolver", [info, value, args])'
-        fields:
-            text:
-                type: String
-            createdAt:
-                type: String
-            user:
-                type: User
+  type: object
+  config:
+    interfaces: [Node]
+    resolveField: '@=resolver("App\\GraphQL\\Resolver\\MessageResolver", [info, value, args])'
+    fields:
+      id:
+        type: ID!
+      text:
+        type: String
+      createdAt:
+        type: String
+      user:
+        type: User
 
 MessageConnection:
-    type: relay-connection
-    config:
-        nodeType: Message!
+  type: relay-connection
+  config:
+    nodeType: Message!

@@ -1,15 +1,20 @@
 User:
-    type: object
-    config:
-        resolveField: '@=resolver("App\\GraphQL\\Resolver\\UserResolver", [info, value, args])'
-        fields:
-            name:
-                type: String
-            messages:
-                type: MessageConnection
-                argsBuilder: Relay::ForwardConnection
+  type: object
+  config:
+    interfaces: [Node]
+    resolveField: '@=resolver("App\\GraphQL\\Resolver\\UserResolver", [info, value, args])'
+    fields:
+      id:
+        type: ID!
+      userId:
+        type: Int
+      name:
+        type: String
+      messages:
+        type: MessageConnection
+        argsBuilder: Relay::Connection
 
 UserConnection:
-    type: relay-connection
-    config:
-        nodeType: User!
+  type: relay-connection
+  config:
+    nodeType: User!

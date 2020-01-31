@@ -8,7 +8,8 @@ type CreateUserPayload {
   clientMutationId: String
 }
 
-type Message {
+type Message implements Node {
+  id: ID!
   text: String
   createdAt: String
   user: User
@@ -37,6 +38,10 @@ type Mutation {
   PostMessage(input: PostMessageInput!): PostMessagePayload
 }
 
+interface Node {
+  id: ID!
+}
+
 # Information about pagination in a connection
 type PageInfo {
   # When paginating forwards, are there more items
@@ -54,7 +59,7 @@ type PageInfo {
 
 input PostMessageInput {
   text: String
-  userId: Int
+  userId: ID
   clientMutationId: String
 }
 
@@ -64,14 +69,26 @@ type PostMessagePayload {
 }
 
 type Query {
-  user(id: Int): User
+  node(id: ID): Node
   users(after: String, first: Int, before: String, last: Int): UserConnection
-  messages(after: String, first: Int, before: String, last: Int): MessageConnection
+  messages(
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): MessageConnection
 }
 
-type User {
+type User implements Node {
+  id: ID!
+  userId: Int
   name: String
-  messages(after: String, first: Int): MessageConnection
+  messages(
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): MessageConnection
 }
 
 # A connection to a list of items

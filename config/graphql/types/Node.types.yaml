@@ -1,0 +1,7 @@
+Node:
+  type: interface
+  config:
+    resolveType: "@=resolver('node_type', [value, typeResolver])"
+    fields:
+      id:
+        type: ID!
