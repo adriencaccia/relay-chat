@@ -1,26 +1,23 @@
 import graphql from "babel-plugin-relay/macro";
-import React from 'react';
-import { createFragmentContainer } from 'react-relay';
+import React from "react";
+import { createFragmentContainer } from "react-relay";
 import User from "./User";
 
-class UserList extends React.Component {
-  render() {
-    const {userData: {users}} = this.props;
+const UserList = props => {
+  const {
+    userData: { users }
+  } = props;
 
-    return (
-      <section>
-        <ul>
-          {users.edges.map(edge =>
-            <User
-              key={edge.node.__id}
-              user={edge.node}
-            />
-          )}
-        </ul>
-      </section>
-    );
-  }
-}
+  return (
+    <section>
+      <ul>
+        {users.edges.map(edge => (
+          <User key={edge.node.__id} user={edge.node} />
+        ))}
+      </ul>
+    </section>
+  );
+};
 
 export default createFragmentContainer(
   UserList,
@@ -37,6 +34,6 @@ export default createFragmentContainer(
           }
         }
       }
-    `,
-  },
+    `
+  }
 );
