@@ -7,6 +7,8 @@ class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = { value: "" };
+    this._handleInputChange = this._handleInputChange.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
   postMessage = text => {
@@ -24,8 +26,9 @@ class User extends React.Component {
     });
   }
 
-  _handleInputKeyDown(event) {
-    if (event.key === "Enter") this.postMessage(this.state.value);
+  _handleSubmit(event) {
+    this.postMessage(this.state.value);
+    event.preventDefault();
   }
 
   render() {
@@ -33,17 +36,12 @@ class User extends React.Component {
     const { value } = this.state;
     return (
       <li>
-        <div>
+        <form onSubmit={this._handleSubmit}>
           <p>
             id {id}, name: {name}
           </p>
-          <input
-            type="text"
-            value={value}
-            onChange={(event) => this._handleInputChange(event)}
-            onKeyDown={(event) => this._handleInputKeyDown(event)}
-          />
-          <button onClick={() => this.postMessage(value)}>Send ✉</button>
+          <input type="text" value={value} onChange={this._handleInputChange} />
+          <input type="submit" value="Send ✉" />
           <ul>
             {messages.edges.map(({ node }) => (
               <li key={node.id}>
@@ -51,7 +49,7 @@ class User extends React.Component {
               </li>
             ))}
           </ul>
-        </div>
+        </form>
       </li>
     );
   }
