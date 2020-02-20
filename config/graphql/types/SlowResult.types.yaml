@@ -1,0 +1,6 @@
+SlowResult:
+  type: object
+  config:
+    fields:
+      result:
+        type: String

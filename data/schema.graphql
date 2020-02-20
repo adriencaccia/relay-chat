@@ -77,6 +77,11 @@ type Query {
     before: String
     last: Int
   ): MessageConnection
+  slowQuery(timeout: Int): SlowResult
+}
+
+type SlowResult {
+  result: String
 }
 
 type User implements Node {

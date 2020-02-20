@@ -16,3 +16,9 @@ Query:
         type: MessageConnection
         argsBuilder: Relay::Connection
         resolve: '@=resolver("get_messages", [args])'
+      slowQuery:
+        type: SlowResult
+        args:
+          timeout:
+            type: Int
+        resolve: '@=resolver("get_slow_query", [args["timeout"]])'
