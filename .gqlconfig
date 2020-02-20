@@ -1,15 +1,22 @@
 {
   schema: {
-    files: 'data/*.graphql',
+    files: "data/*.graphql"
   },
   query: {
     files: [
       // [Embedded queries] graphql tag files
       {
-        match: { include: 'client/src/**/*.js', ignore: '**/tests/**/*.js' },
-        parser: [ 'EmbeddedQueryParser', { startTag: 'graphql`', endTag: '`' } ],
+        match: { include: "client/src/**/*.js", ignore: "**/tests/**/*.js" },
+        parser: ["EmbeddedQueryParser", { startTag: "graphql`", endTag: "`" }],
+        validate: {
+          extends: "gql-rules-query-relay",
+          rules: {
+            // disable directive validation
+            KnownDirectives: "off"
+          }
+        },
         isRelay: true
-      },
+      }
     ]
   }
 }
