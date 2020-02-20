@@ -29,6 +29,8 @@ const sharedUpdater = (store, user, newEdge) => {
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
 };
 
+let tempID = 0;
+
 function commit(environment, text, user) {
   // Now we just call commitMutation with the appropriate parameters
   return commitMutation(environment, {
@@ -42,6 +44,26 @@ function commit(environment, text, user) {
 
       // Get the node of the newly created Message record
       const node = payload.getLinkedRecord("message");
+
+      // Create the edge of the newly created Message record
+      const newEdge = store.create(
+        "client:newEdge:" + node.getDataID(),
+        "edge"
+      );
+      newEdge.setLinkedRecord(node, "node");
+
+      // Add it to the user's message list
+      sharedUpdater(store, user, newEdge);
+    },
+    optimisticUpdater: store => {
+      // Create a Message record in our store with a temporary ID
+      const id = "client:newMessage:" + tempID++;
+      const node = store.create(id, "Message");
+      // We specify the wrong date format in order to show how the updater works
+      const createdAt = new Date().toLocaleString();
+      node.setValue(text, "text");
+      node.setValue(id, "id");
+      node.setValue(createdAt, "createdAt");
 
       // Create the edge of the newly created Message record
       const newEdge = store.create(

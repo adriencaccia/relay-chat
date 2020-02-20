@@ -1,23 +1,21 @@
 import graphql from "babel-plugin-relay/macro";
 import React from "react";
 import { QueryRenderer } from "react-relay";
-import SimpleUser from "./components/SimpleUser";
-import SlowComponent from "./components/SlowComponent";
+import UserList from "./components/UserList";
 import relayEnvironment from "./relayEnvironment";
+
+const appQuery = graphql`
+  query AppQuery {
+    ...UserList_userData
+  }
+`;
 
 export default class App extends React.Component {
   render() {
     return (
       <QueryRenderer
         environment={relayEnvironment}
-        query={graphql`
-          query AppQuery {
-            node(id: "5e31876721e45") {
-              ...SimpleUser_user
-            }
-            ...SlowComponent_slowResult @arguments(timeout: 1500)
-          }
-        `}
+        query={appQuery}
         variables={{}}
         render={({ error, props }) => {
           if (error) {
@@ -26,12 +24,7 @@ export default class App extends React.Component {
           if (!props) {
             return <div>Loading...</div>;
           }
-          return (
-            <div>
-              <SimpleUser user={props.node} />
-              <SlowComponent slowResult={props} />
-            </div>
-          );
+          return <UserList userData={props} />;
         }}
       />
     );
