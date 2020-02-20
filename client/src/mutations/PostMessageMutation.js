@@ -27,7 +27,7 @@ const sharedUpdater = (store, user, newEdge) => {
 
   // Insert the new message into the message List connection
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
-}
+};
 
 function commit(environment, text, user) {
   // Now we just call commitMutation with the appropriate parameters
@@ -44,8 +44,11 @@ function commit(environment, text, user) {
       const node = payload.getLinkedRecord("message");
 
       // Create the edge of the newly created Message record
-      const newEdge = store.create('client:newEdge:' + node.getDataID(), 'edge');
-      newEdge.setLinkedRecord(node, 'node');
+      const newEdge = store.create(
+        "client:newEdge:" + node.getDataID(),
+        "edge"
+      );
+      newEdge.setLinkedRecord(node, "node");
 
       // Add it to the user's message list
       sharedUpdater(store, user, newEdge);
